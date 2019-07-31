@@ -28,7 +28,7 @@ public function blog($value='')
 {
 	# code...
 	$page=intval($this->input->get('page'));
-	$search=urldecode($this->input->get('search',TRUE));
+	$search=urldecode($this->input->get('search',true));
 	$query=$this->m->paginatearticle($page,$search)->result_array();
 	foreach ($query as $key => $value) {
 		# code...
@@ -46,8 +46,8 @@ public function blog($value='')
 		'bararticle'=>$each,
 		'barcategory'=>$this->m->eachcategory(),
 		'bardate'=>$this->m->eachdate(),
-		'number'=>$this->m->article($search)->num_rows(),];
-	$data['pagination']=$this->m->pagination($base_url,$data['number']);
+		'number'=>$this->m->article($search)->num_rows(),
+		'pagination'=>$this->m->pagination($base_url,$data['number']),];
 	$this->template->load('home-recruitment','blog-articles-cards-sidebar',$data);
 }
 public function category($category='')
@@ -65,7 +65,7 @@ public function category($category='')
 		'barcategory'=>$this->m->eachcategory(),
 		'bardate'=>$this->m->eachdate(),
 		'number'=>$this->m->article(null,$where)->num_rows(),];
-	$data['pagination']=$this->m->pagination(base_url('index/category/'.$category),$data['number']);
+	$data['pagination']=$this->m->pagination(base_url('index/category/'.$category.''),$data['number']);
 	$this->template->load('home-recruitment','blog-articles-cards-sidebar',$data);
 }
 public function date($year='',$month='')
@@ -189,5 +189,4 @@ public function profile($value='')
 	# code...
 	$this->template->load('home-recruitment','page-accounts-profile');
 }
-
 }
